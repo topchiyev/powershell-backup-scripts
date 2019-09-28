@@ -1,0 +1,17 @@
+These scripts contain calls to appropriate scripts for each backed up host.
+They are intended to be run via Windows Task Scheduler on a timed basis:
+ALL_BACKUP.ps1
+ALL_CLEANUP.ps1
+
+Each host require 4 scripts:
+{HOSTNAME}_FILE_backup.ps1
+{HOSTNAME}_MSSQL_backup.ps1
+{HOSTNAME}_FILE_cleanup.ps1
+{HOSTNAME}_MSSQL_cleanup.ps1
+
+Host scripts call these scripts which do the job:
+
+MAKE_FILE_BACKUP.ps1 - Connects to the remote server via Powershell Session, makes a ZIP archive on an SMB share, copies it to the backup store.
+MAKE_MSSQL_BACKUP.ps1 - Connects to the MSSQL server, makes a ZIP archive in the SMB share, copies it to the backup store.
+MAKE_FILE_CLEANUP.ps1 - Iterates over backups in the backup store, deletes all except: leaves all backups of current month, last backup of each month of current year, last backup of each year
+MAKE_MSSQL_CLEANUP.ps1 - Iterates over backups in the backup store, deletes all except: leaves all backups of current month, last backup of each month of current year, last backup of each year
